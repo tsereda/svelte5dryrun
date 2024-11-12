@@ -1,50 +1,20 @@
 <script lang="ts">
-    import BarChart from '$lib/components/charts/BarChart.svelte';
-    import LineChart from '$lib/components/charts/LineChart.svelte';
-    import ScatterPlot from '$lib/components/charts/ScatterPlot.svelte';
-    import type { DataPoint } from '$lib/stores/chartStore';
+    import ForceGraph from '$lib/components/charts/ForceGraph.svelte';
   
-    const data: DataPoint[] = [
-      { label: 'A', value: 10 },
-      { label: 'B', value: 20 },
-      { label: 'C', value: 15 },
-      { label: 'D', value: 25 }
-    ];
-  
-    function handlePointClick(event: CustomEvent<{ data: DataPoint; event: MouseEvent }>) {
-      console.log('Point clicked:', event.detail.data);
-    }
+    const graphData = {
+      nodes: [
+        { id: "A", group: 1 },
+        { id: "B", group: 1 },
+        { id: "C", group: 2 },
+        { id: "D", group: 2 }
+      ],
+      links: [
+        { source: "A", target: "B", value: 1 },
+        { source: "B", target: "C", value: 2 },
+        { source: "C", target: "D", value: 1 },
+        { source: "D", target: "A", value: 3 }
+      ]
+    };
   </script>
   
-  <div class="grid gap-8">
-    <section>
-      <h2>Bar Chart</h2>
-      <BarChart {data} />
-    </section>
-  
-    <section>
-      <h2>Line Chart</h2>
-      <LineChart {data} />
-    </section>
-  
-    <section>
-      <h2>Scatter Plot</h2>
-      <ScatterPlot 
-        {data} 
-        on:pointClick={handlePointClick}
-      />
-    </section>
-  </div>
-  
-  <style>
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    }
-  
-    h2 {
-      margin-bottom: 1rem;
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-  </style>
+  <ForceGraph data={graphData} />
